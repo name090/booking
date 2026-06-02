@@ -21,6 +21,7 @@
                     <p class="card-text">
                         <small class="text-body-secondary">
                         Категорія: {{ apart.category }} - Місткість: {{ apart.capacity }}</small></p>
+                    <a href="{% url 'booking_page' apart.id %}" class="btn btn-primary">Забронювати</a>
                 </div>
                 </div>
             </div>

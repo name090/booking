@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1>Апартаменти {{apart.name}}</h1>
+    <p class="text-primary fw-bold fs-5">{{apart.price}} грн</p>
+    <span class="badge text-bg-secondary">{{apart.category}}</span>
+    <small class="text-body-secondary"> Місткість: {{apart.capacity}}</small>
+    {% if apart.image %}
+        <img src="{{apart.image.url}}" style="max-width: 600px;" class="my-3 d-block img-fluid rounded-start" alt="...">
+    {% endif %}
+    
+    <p>
+        {{apart.description}}
+    </p>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary mb-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Забронювати
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Оформлення бронювання</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            
+            <form action="" method="post">
+            
+                <div class="mb-3">
+                <label for="formGroupExampleInput" class="form-label">Введіть ім'я та прізвище</label>
+                <input required type="text" name="name" class="form-control" id="formGroupExampleInput" placeholder="Ім'я Прізвище">
+                </div>
+                <div class="mb-3">
+                <label for="formGroupExampleInput2" class="form-label">Введіть емейл</label>
+                <input required type="email" name="email" class="form-control" id="formGroupExampleInput2" placeholder="name@gmail.com">
+                </div>
+                <!-- Інші поля -->
+                 
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Скасувати</button>
+            <button type="submit" class="btn btn-primary">Підтвердити</button>
+        </form>
+        </div>
+        </div>
+    </div>
+    </div>
+
+    
+{% endblock %}
