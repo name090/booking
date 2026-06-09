@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1>Бронювання №{{booking.id}} оформлено! </h1>
+    <p>Ім'я: {{booking.name}}</p>
+    <p>Емейл: {{booking.email   }}</p>
+    <p>Телефон: {{booking.phone}}</p>
+    <p>{{booking.check_in}} - {{booking.check_out}}</p>
+
+    <h3>Апартаменти: {{apart.name}}</h3>
+    <p class="text-primary fw-bold fs-5">{{apart.price}} грн</p>
+    <span class="badge text-bg-secondary">{{apart.category}}</span>
+    <small class="text-body-secondary"> Місткість: {{apart.capacity}}</small>
+    {% if apart.image %}
+        <img src="{{apart.image.url}}" style="max-width: 600px;" class="my-3 d-block img-fluid rounded-start" alt="...">
+    {% endif %}
+    <p>
+        {{apart.description}}
+    </p>
+
+
+    
+{% endblock %}

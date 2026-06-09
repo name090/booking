@@ -30,17 +30,28 @@
         <div class="modal-body">
             
             <form action="" method="post">
-            
+                {% csrf_token %}
                 <div class="mb-3">
-                <label for="formGroupExampleInput" class="form-label">Введіть ім'я та прізвище</label>
-                <input required type="text" name="name" class="form-control" id="formGroupExampleInput" placeholder="Ім'я Прізвище">
+                    <label for="formGroupExampleInput" class="form-label">Введіть ім'я та прізвище</label>
+                    <input required type="text" name="name" class="form-control" id="formGroupExampleInput" placeholder="Ім'я Прізвище">
                 </div>
                 <div class="mb-3">
-                <label for="formGroupExampleInput2" class="form-label">Введіть емейл</label>
-                <input required type="email" name="email" class="form-control" id="formGroupExampleInput2" placeholder="name@gmail.com">
+                    <label for="formGroupExampleInput2" class="form-label">Введіть емейл</label>
+                    <input required type="email" name="email" class="form-control" id="formGroupExampleInput2" placeholder="name@gmail.com">
                 </div>
-                <!-- Інші поля -->
-                 
+                <div class="mb-3">
+                    <label for="formGroupExampleInput3" class="form-label">Введіть телефон</label>
+                    <input required type="text" name="phone" class="form-control" id="formGroupExampleInput3" placeholder="+380 (99) 999-99-99">
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Дата заїзду</label>
+                    <input required type="date" name="check_in" class="form-control" id="inputEmail4">
+                </div>
+                <div class="col-md-6">
+                    <label for="inputPassword4" class="form-label">Дата відїзду</label>
+                    <input required type="date" name="check_out" class="form-control" id="inputPassword4">
+                </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Скасувати</button>
