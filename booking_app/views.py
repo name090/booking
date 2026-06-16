@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Apartments, Category, Booking
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def home(request):
@@ -25,7 +26,7 @@ def booking(request, apartment_id):
             apartment=apartments,
             check_in=check_in,
             check_out=check_out,
-            user=request.user
+            user=request.user if request.user.is_authenticated else None    
         )
 
 
@@ -38,4 +39,10 @@ def booking(request, apartment_id):
 def booking_confirmation(request, booking_id):
     booking = Booking.objects.get(id=booking_id)
     apartment = booking.apartment
-    return render(request, 'booking_confirmation.html', {'booking': booking, 'apart': apartment})
+    return render(request, 'booking_confirmed.html', {'booking': booking, 'apart': apartment})
+
+
+@login_required
+def my_bookings(request):
+    bookings = Booking.objects.filter(user=request.user)
+    return render(request, 'user_bookings.html', {'bookings': bookings})

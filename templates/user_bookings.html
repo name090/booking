@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Мої бронювання</h1>
+    {% if bookings %}
+        <div class="list-group  mb-3">
+            {% for booking in bookings %}
+                <div class="list-group-item list-group-item-action mb-2">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ booking.apartment.name }}</h5>
+                        <small>{{ booking.created_at|date:"d M Y H:i" }}</small>
+                    </div>
+                    <p class="mb-1">Дата заїзду: {{ booking.check_in }}</p>
+                    <p class="mb-1">Дата виїзду: {{ booking.check_out }}</p>
+                    <p class="mb-1">Ціна: {{ booking.apartment.price }} грн</p>
+                </div>  
+            {% endfor %}
+        </div>
+
+    {% else %}
+        <p>У вас ще немає бронювань.</p>
+    {% endif %}
+{% endblock %}
