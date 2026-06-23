@@ -1,10 +1,21 @@
 from django.shortcuts import render, redirect
 from .models import Apartments, Category, Booking
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 # Create your views here.
 def home(request):
+
     apartments = Apartments.objects.all()
+
+    capacity = request.GET.get('capacity')
+    check_in = request.GET.get('check_in')
+    check_out = request.GET.get('check_out')
+
+    if capacity and check_in and check_out:
+        apartments = apartments.filter(capacity__gte=capacity)
+    if check_in and check_out:
+        apartments = apartments.exclude(bookings__check_in__lt=check_out, bookings__check_out__gt=check_in)
     return render(request, 'index.html', {'name': 'Booking App', 'apartments': apartments})
 
 
@@ -19,18 +30,22 @@ def booking(request, apartment_id):
         check_in = request.POST.get('check_in')
         check_out = request.POST.get('check_out')
 
-        booking = Booking.objects.create(
-            name=name,
-            email=email,
-            phone=phone,
-            apartment=apartments,
-            check_in=check_in,
-            check_out=check_out,
-            user=request.user if request.user.is_authenticated else None    
-        )
+        existing_bookings = Booking.objects.filter(apartment=apartments, check_in__lt=check_out, check_out__gt=check_in)
+        if existing_bookings.exists():
+            messages.error(request, 'Ці дати вже заброньовані. Будь ласка, оберіть інші дати.')
+        else:
+            booking = Booking.objects.create(
+                name=name,
+                email=email,
+                phone=phone,
+                apartment=apartments,
+                check_in=check_in,
+                check_out=check_out,
+                user=request.user if request.user.is_authenticated else None    
+            )
 
 
-        return redirect('booking_confirmation', booking_id=booking.id)
+            return redirect('booking_confirmation', booking_id=booking.id)
 
     context = {"apart": apartments}
     return render(request, 'booking.html', context)
@@ -43,6 +58,6 @@ def booking_confirmation(request, booking_id):
 
 
 @login_required
-def my_bookings(request):
+def user_bookings(request):
     bookings = Booking.objects.filter(user=request.user)
     return render(request, 'user_bookings.html', {'bookings': bookings})

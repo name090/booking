@@ -1,31 +1,46 @@
 {% extends 'base.html' %}
 
-    {% block content %}
+{% block content %}
 
-        <h1>Booking</h1>
-        <h2>Start your journey</h2>
+<form action="" method="get">
+<div class="row my-4">
+    <div class="col-md-2">
+        <label for="inputEmail4" class="form-label">Дата заїзду</label>
+        <input value="{{ request.GET.check_in }}" required type="date" name="check_in"  class="form-control" id="inputEmail4">
+    </div>
+    <div class="col-md-2">
+        <label for="inputPassword4" class="form-label">Дата виїзду</label>
+        <input value="{{ request.GET.check_out }}" required type="date" name="check_out" class="form-control" id="inputPassword4">
+    </div>
+    <div class="col-md-2">
+        <label for="inputPassword4" class="form-label">Місткість</label>
+        <input value="{{ request.GET.capacity }}" required type="number" min="0" max="15" name="capacity" class="form-control" id="inputPassword4">
+    </div>
+    <div class="col-md-2 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary mt-4">Пошук</button>
+    </div>
+</div>
+</form>
+{% for apart in apartments %}
+<div class="card mb-3" style="max-width: 540px;">
+<div class="row g-0">
+    <div class="col-md-4">
+    {% if apart.image %}
+        <img src="{{ apart.image.url }}" class="img-fluid rounded-start" alt="...">
+    {% endif %}
+    </div>
+    <div class="col-md-8">
+    <div class="card-body">
+        <h5 class="card-title">{{ apart.name }}</h5>
+        <p class="card-text">{{ apart.price }} грн</p>
+        <p class="card-text">
+            <small class="text-body-secondary">
+            Категорія: {{ apart.category }} - Місткість: {{ apart.capacity }}</small></p>
+        <a href="{% url 'booking_page' apart.id %}" class="btn btn-primary">Забронювати</a>
+    </div>
+    </div>
+</div>
+</div>
+{% endfor %}
 
-        {% for apart in apartments %}
-
-            <div class="card mb-3" style="max-width: 540px;">
-            <div class="row g-0">
-                <div class="col-md-4">
-                {% if apart.image %}
-                    <img src="{{ apart.image.url }}" class="img-fluid rounded-start" alt="...">
-                {% endif %}
-                </div>
-                <div class="col-md-8">
-                <div class="card-body">
-                    <h5 class="card-title">{{ apart.name }}</h5>
-                    <p class="card-text">{{ apart.price }} грн</p>
-                    <p class="card-text">
-                        <small class="text-body-secondary">
-                        Категорія: {{ apart.category }} - Місткість: {{ apart.capacity }}</small></p>
-                    <a href="{% url 'booking_page' apart.id %}" class="btn btn-primary">Забронювати</a>
-                </div>
-                </div>
-            </div>
-            </div>
-        {% endfor %}
-
-    {% endblock %}
+{% endblock %}
